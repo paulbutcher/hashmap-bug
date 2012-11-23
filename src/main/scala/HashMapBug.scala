@@ -8,22 +8,15 @@ object HashMapBug {
 
   def load(fileName: String) {
 
-    val nodes = new collection.mutable.HashMap[Symbol, Integer]
+    val nodes = new collection.mutable.ListBuffer[Symbol]
     
-    def chunks() = new Iterator[Symbol] {
-      val lines = Source.fromFile(fileName).getLines
-      def hasNext = lines.hasNext
-      def next = (lines.next.split(",") map { s => Symbol(s) }).head
-      // def next = Symbol(lines.next.split(",").head)
-    }
-      
-    chunks foreach { node =>
-      nodes += (node -> nodes.size)
+    Source.fromFile(fileName).getLines foreach { line =>
+      nodes += (line.split(",") map { s => Symbol(s) }).head
     }
     
-    // val graph = Array.ofDim[Int](nodes.size, nodes.size)
-    chunks foreach { node =>
-      if (!nodes.isDefinedAt(node))
+    val graph = Array.ofDim[Int](nodes.size, nodes.size)
+    nodes foreach { node =>
+      if (!(Symbol(node.name) eq node))
         println(node)
     }
   }
