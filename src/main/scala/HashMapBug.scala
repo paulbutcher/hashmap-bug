@@ -14,13 +14,14 @@ object HashMapBug {
       val lines = Source.fromFile(fileName).getLines
       def hasNext = lines.hasNext
       def next = (lines.next.split(",") map { s => Symbol(s) }).head
+      // def next = Symbol(lines.next.split(",").head)
     }
       
     chunks foreach { node =>
       nodes += (node -> nodes.size)
     }
     
-    val graph = Array.ofDim[Int](nodes.size, nodes.size)
+    // val graph = Array.ofDim[Int](nodes.size, nodes.size)
     chunks foreach { node =>
       if (!nodes.isDefinedAt(node))
         println(node)
